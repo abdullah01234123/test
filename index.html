@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Discover films and series — ReelShelf</title>
+  <meta name="description" content="Discover original film and series listings, browse by category, and find official viewing options with ReelShelf.">
+  <meta name="theme-color" content="#101114">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/posters/last-orbit.svg">
+</head>
+<body>
+<div class="site-shell">
+  <div class="notice-bar"><span class="notice-dot"></span> Discover stories worth staying up for <span class="notice-separator">/</span> <span class="notice-muted">Demo catalogue · original sample artwork</span></div>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="ReelShelf homepage"><span class="brand-mark">R</span><span>reel<span class="brand-accent">shelf</span><small>YOUR NEXT STORY STARTS HERE</small></span></a>
+    <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+    <nav class="main-nav" aria-label="Main navigation">
+      <a data-nav-category="All" href="./">Discover</a>
+      <a data-nav-category="Movie" href="?category=Movie">Movies</a>
+      <a data-nav-category="Series" href="?category=Series">Series</a>
+      <a data-nav-category="Animation" href="?category=Animation">Animation</a>
+      <a data-nav-category="Documentary" href="?category=Documentary">Documentaries</a>
+    </nav>
+    <form class="header-search" id="search-form" role="search">
+      <label class="sr-only" for="site-search">Search titles, genres or languages</label>
+      <span class="search-icon">⌕</span><input id="site-search" name="q" type="search" placeholder="Search titles..." autocomplete="off">
+      <button type="submit" aria-label="Search">↵</button>
+    </form>
+  </header>
+
+  <main id="main-content" aria-live="polite">
+    <div class="loading-state">Loading ReelShelf…</div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <a class="brand footer-brand" href="./"><span class="brand-mark">R</span><span>reel<span class="brand-accent">shelf</span><small>YOUR NEXT STORY STARTS HERE</small></span></a>
+      <p>A discovery catalogue for curious viewers.</p>
+      <a href="mailto:hello@example.com" class="footer-contact">Contact <span>↗</span></a>
+    </div>
+    <div class="footer-bottom"><span>© <span id="current-year"></span> ReelShelf. Original demo project.</span><span>Built for licensed catalogues and official viewing links.</span><a href="#top" id="back-to-top">Back to top ↑</a></div>
+  </footer>
+</div>
+<script src="assets/catalog.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
