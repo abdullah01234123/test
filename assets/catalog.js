@@ -1,5 +1,5 @@
 window.TMDB_CONFIG = {
-  accessToken: '',
+  accessToken: '6242885f42968d3bb2c64c1976a19174',
   apiBase: 'https://api.themoviedb.org/3',
   imageBase: 'https://image.tmdb.org/t/p',
   language: 'en-US'
