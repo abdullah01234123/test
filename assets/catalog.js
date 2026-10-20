@@ -1,5 +1,5 @@
 window.TMDB_CONFIG = {
-  accessToken: '6242885f42968d3bb2c64c1976a19174',
+  accessToken: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MjQyODg1ZjQyOTY4ZDNiYjJjNjRjMTk3NmExOTE3NCIsIm5iZiI6MTc5MjQ5Mjg3Ni41MTYsInN1YiI6IjZhZDc0NTRjM2E5YjhiMjUzMGI5ZDU3MyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Rpwx8IGGCSq6VMSZhqkkyYppU3rSl0zuXNxrbVqra1c',
   apiBase: 'https://api.themoviedb.org/3',
   imageBase: 'https://image.tmdb.org/t/p',
   language: 'en-US'
