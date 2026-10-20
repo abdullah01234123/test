@@ -1,4 +1,10 @@
-/* Fictional sample catalogue and original demo artwork. */
+window.TMDB_CONFIG = {
+  accessToken: '',
+  apiBase: 'https://api.themoviedb.org/3',
+  imageBase: 'https://image.tmdb.org/t/p',
+  language: 'en-US'
+};
+
 window.REELSHELF_CATALOG = [
   {
     slug: 'the-last-orbit', title: 'The Last Orbit', year: 2026, kind: 'Movie', genres: ['Sci-Fi', 'Adventure'],
