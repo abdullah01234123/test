@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" role="img" aria-label="Original illustrative poster for THE CLOCKMAKER’S MAP">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#201637"/><stop offset="1" stop-color="#101114"/></linearGradient><linearGradient id="glow" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d1b5ff" stop-opacity="0.62"/><stop offset="1" stop-color="#db99ff" stop-opacity="0"/></linearGradient></defs>
+<rect width="400" height="600" fill="url(#bg)"/>
+<rect width="400" height="600" fill="url(#glow)" opacity="0.8"/>
+<circle cx="247" cy="178" r="120" fill="#d9b7ff" opacity=".12"/>
+<path d="M58 416 L148 165 L184 234 L282 112 L355 420Z" fill="#6d4cc5" opacity=".42"/>
+<path d="M0 340 L100 255 L170 324 L255 210 L400 355 L400 600 L0 600Z" fill="#af8ae8" opacity=".18"/>
+<circle cx="162" cy="264" r="68" fill="none" stroke="#d9b7ff" stroke-width="2" opacity=".7"/>
+<circle cx="162" cy="264" r="42" fill="none" stroke="#d9b7ff" stroke-width="2" opacity=".45"/>
+<path d="M126 264 H198 M162 228 V300" fill="none" stroke="#d9b7ff" stroke-width="2" opacity=".7"/>
+<path d="M24 28 H110 M24 28 V93 M376 508 V572 H310" fill="none" stroke="#d9b7ff" stroke-width="1" opacity=".62"/>
+<text x="27" y="56" font-family="Arial,sans-serif" font-size="10" font-weight="700" letter-spacing="3" fill="#d9b7ff" opacity=".9">REELSHELF ORIGINALS</text>
+<text x="26" y="438" font-family="Arial,sans-serif" font-size="30" font-weight="800" letter-spacing="-1.3" fill="#fff">THE CLOCKMAKER’S</text>
+<text x="26" y="476" font-family="Arial,sans-serif" font-size="36" font-weight="800" letter-spacing="-1.7" fill="#d9b7ff">MAP</text>
+<text x="28" y="510" font-family="Arial,sans-serif" font-size="9" font-weight="700" letter-spacing="1.9" fill="#e6e4ec" opacity=".83">TIME HAS A HIDDEN SIDE</text>
+<line x1="28" y1="530" x2="372" y2="530" stroke="#fff" stroke-opacity=".22"/>
+<text x="28" y="552" font-family="Arial,sans-serif" font-size="8" letter-spacing="2" fill="#fff" opacity=".6">A FICTIONAL DEMO TITLE</text>
+<text x="372" y="574" text-anchor="end" font-family="Arial,sans-serif" font-size="8" letter-spacing="2" fill="#fff" opacity=".48">12 / 12</text>
+</svg>
