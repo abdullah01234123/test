@@ -78,6 +78,7 @@
 
     const url = new URL(`${config.apiBase || 'https://api.themoviedb.org/3'}${endpoint}`);
     url.searchParams.set('language', config.language || 'en-US');
+
     for (const [key, value] of Object.entries(query)) {
       if (value !== undefined && value !== null && value !== '') {
         url.searchParams.set(key, String(value));
@@ -99,7 +100,7 @@
           message = payload.status_message;
         }
       } catch (error) {
-        // Ignore JSON parse issues and keep the status text.
+        // Ignore JSON parse issues.
       }
       throw new Error(message);
     }
