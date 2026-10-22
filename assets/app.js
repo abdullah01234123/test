@@ -90,13 +90,20 @@
   }
 
   async function tmdbFetch(endpoint, query = {}) {
+    const apiKey = String(config.apiKey || '').trim();
     const token = String(config.accessToken || '').trim();
-    if (!token) {
-      throw new Error('TMDB access token is missing. Set window.TMDB_CONFIG.accessToken before loading the page.');
+    const headers = { Accept: 'application/json' };
+
+    if (!apiKey && !token) {
+      throw new Error('TMDB API key or access token is missing. Add a valid public key to window.TMDB_CONFIG.');
     }
 
     const url = new URL(`${config.apiBase || 'https://api.themoviedb.org/3'}${endpoint}`);
     url.searchParams.set('language', config.language || 'en-US');
+
+    if (apiKey) {
+      url.searchParams.set('api_key', apiKey);
+    }
 
     for (const [key, value] of Object.entries(query)) {
       if (value !== undefined && value !== null && value !== '') {
@@ -104,12 +111,11 @@
       }
     }
 
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json'
-      }
-    });
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+
+    const response = await fetch(url, { headers });
 
     if (!response.ok) {
       let message = `TMDB request failed with status ${response.status}`;
@@ -233,11 +239,10 @@
       unique.set(`${isSeries ? 'tv' : 'movie'}-${item.id}`, item);
     });
 
-    const normalized = Array.from(unique.values())
+    return Array.from(unique.values())
+      .filter(item => item && item.poster_path)
       .slice(0, 100)
       .map(item => normalizeTmdbItem(item, item.media_type === 'tv' || Boolean(item.first_air_date) ? 'tv' : 'movie'));
-
-    return normalized.filter(item => item && item.title && item.poster);
   }
 
   async function loadCatalog() {

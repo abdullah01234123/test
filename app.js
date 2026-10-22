@@ -16,6 +16,25 @@
 
   if (!main) return;
 
+  const languageNames = {
+    en: 'English',
+    ur: 'Urdu',
+    hi: 'Hindi',
+    fr: 'French',
+    es: 'Spanish',
+    de: 'German',
+    ja: 'Japanese',
+    ko: 'Korean',
+    it: 'Italian',
+    pt: 'Portuguese',
+    ar: 'Arabic'
+  };
+
+  function normalizeLanguage(code) {
+    const raw = String(code || '').toLowerCase();
+    return languageNames[raw] || (raw ? raw.toUpperCase() : 'English');
+  }
+
   function escapeHtml(value) {
     return String(value ?? '').replace(/[&<>"']/g, character => ({
       '&': '&amp;',
@@ -71,13 +90,20 @@
   }
 
   async function tmdbFetch(endpoint, query = {}) {
+    const apiKey = String(config.apiKey || '').trim();
     const token = String(config.accessToken || '').trim();
-    if (!token) {
-      throw new Error('TMDB access token is missing. Set window.TMDB_CONFIG.accessToken before loading the page.');
+    const headers = { Accept: 'application/json' };
+
+    if (!apiKey && !token) {
+      throw new Error('TMDB API key or access token is missing. Add a valid public key to window.TMDB_CONFIG.');
     }
 
     const url = new URL(`${config.apiBase || 'https://api.themoviedb.org/3'}${endpoint}`);
     url.searchParams.set('language', config.language || 'en-US');
+
+    if (apiKey) {
+      url.searchParams.set('api_key', apiKey);
+    }
 
     for (const [key, value] of Object.entries(query)) {
       if (value !== undefined && value !== null && value !== '') {
@@ -85,12 +111,11 @@
       }
     }
 
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json'
-      }
-    });
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+
+    const response = await fetch(url, { headers });
 
     if (!response.ok) {
       let message = `TMDB request failed with status ${response.status}`;
@@ -147,7 +172,7 @@
     const title = mediaType === 'movie' ? (item.title || 'Untitled') : (item.name || 'Untitled');
     const releaseDate = mediaType === 'movie' ? (item.release_date || '') : (item.first_air_date || '');
     const year = releaseDate ? Number(String(releaseDate).slice(0, 4)) : new Date().getFullYear();
-    const language = (item.original_language || 'en').toUpperCase();
+    const language = normalizeLanguage(item.original_language || 'en');
     const genresList = buildGenres(item);
     const runtimeMinutes = mediaType === 'movie'
       ? Number(item.runtime || 0)
@@ -215,6 +240,7 @@
     });
 
     return Array.from(unique.values())
+      .filter(item => item && item.poster_path)
       .slice(0, 100)
       .map(item => normalizeTmdbItem(item, item.media_type === 'tv' || Boolean(item.first_air_date) ? 'tv' : 'movie'));
   }
