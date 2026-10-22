@@ -283,10 +283,12 @@
   function renderFilters(state = getState()) {
     const categoryChips = categories.map(category => `
       <a class="filter-chip ${state.currentCategory === category && !state.currentGenre ? 'selected' : ''}" href="${listingUrl({ category, genre: '' }, state)}">${escapeHtml(categoryLabel(category))}</a>`).join('');
+
     const genreChips = [
       `<a class="filter-chip genre-chip ${!state.currentGenre ? 'selected' : ''}" data-genre="All genres" href="${listingUrl({ genre: '' }, state)}">All genres</a>`,
       ...genres.map(genre => `<a class="filter-chip genre-chip ${state.currentGenre === genre ? 'selected' : ''}" data-genre="${escapeHtml(genre)}" href="${listingUrl({ genre, category: 'All' }, state)}">${escapeHtml(genre)}</a>`)
     ].join('');
+
     const languageChips = languages.map(language => `
       <a class="filter-chip ${state.currentLanguage === language ? 'selected' : ''}" href="${listingUrl({ language }, state)}">${escapeHtml(language)}</a>`).join('');
 
