@@ -177,16 +177,34 @@
   }
 
   async function loadTmdbCatalog() {
-    const [trending, popularMovies, popularSeries] = await Promise.all([
+    const requests = [
       tmdbFetch('/trending/all/week', { page: 1 }),
+      tmdbFetch('/trending/all/week', { page: 2 }),
+      tmdbFetch('/trending/all/week', { page: 3 }),
       tmdbFetch('/movie/popular', { page: 1 }),
-      tmdbFetch('/tv/popular', { page: 1 })
-    ]);
+      tmdbFetch('/movie/popular', { page: 2 }),
+      tmdbFetch('/movie/popular', { page: 3 }),
+      tmdbFetch('/movie/popular', { page: 4 }),
+      tmdbFetch('/tv/popular', { page: 1 }),
+      tmdbFetch('/tv/popular', { page: 2 }),
+      tmdbFetch('/tv/popular', { page: 3 }),
+      tmdbFetch('/tv/popular', { page: 4 })
+    ];
+
+    const [trending1, trending2, trending3, movie1, movie2, movie3, movie4, series1, series2, series3, series4] = await Promise.all(requests);
 
     const combined = [
-      ...(Array.isArray(trending && trending.results) ? trending.results : []),
-      ...(Array.isArray(popularMovies && popularMovies.results) ? popularMovies.results : []),
-      ...(Array.isArray(popularSeries && popularSeries.results) ? popularSeries.results : [])
+      ...(Array.isArray(trending1 && trending1.results) ? trending1.results : []),
+      ...(Array.isArray(trending2 && trending2.results) ? trending2.results : []),
+      ...(Array.isArray(trending3 && trending3.results) ? trending3.results : []),
+      ...(Array.isArray(movie1 && movie1.results) ? movie1.results : []),
+      ...(Array.isArray(movie2 && movie2.results) ? movie2.results : []),
+      ...(Array.isArray(movie3 && movie3.results) ? movie3.results : []),
+      ...(Array.isArray(movie4 && movie4.results) ? movie4.results : []),
+      ...(Array.isArray(series1 && series1.results) ? series1.results : []),
+      ...(Array.isArray(series2 && series2.results) ? series2.results : []),
+      ...(Array.isArray(series3 && series3.results) ? series3.results : []),
+      ...(Array.isArray(series4 && series4.results) ? series4.results : [])
     ];
 
     const unique = new Map();
@@ -196,7 +214,9 @@
       unique.set(`${isSeries ? 'tv' : 'movie'}-${item.id}`, item);
     });
 
-    return Array.from(unique.values()).slice(0, 30).map(item => normalizeTmdbItem(item, item.media_type === 'tv' || Boolean(item.first_air_date) ? 'tv' : 'movie'));
+    return Array.from(unique.values())
+      .slice(0, 100)
+      .map(item => normalizeTmdbItem(item, item.media_type === 'tv' || Boolean(item.first_air_date) ? 'tv' : 'movie'));
   }
 
   async function loadCatalog() {
@@ -260,9 +280,9 @@
           <div class="hero-kicker"><span class="kicker-dot"></span> FEATURED STORY <span class="kicker-rule"></span> ${escapeHtml(featured.year)}</div>
           <h1>${escapeHtml(featured.title)}</h1>
           <p class="hero-tagline">${escapeHtml(featured.tagline)}</p>
-          <div class="hero-meta"><span class="hero-rating">★ ${escapeHtml(featured.rating || 'N/A')}</span><span>${escapeHtml(featured.kind)}</span><span>${escapeHtml(featured.runtime)}</span><span class="hero-meta-muted">${escapeHtml(featured.language)}</span></div>
+          <div class="hero-meta"><span class="hero-rating">★ ${escapeHtml(featured.rating || 'N/A')}</span><span>${escapeHtml(featured.kind)}</span><span>${escapeHtml(featured.runtime)}</span></div>
           <p class="hero-description">${escapeHtml(featured.synopsis)}</p>
-          <div class="hero-actions"><a class="primary-button" href="${detailUrl(featured)}">Explore title <span>→</span></a><a class="secondary-button" href="https://www.justwatch.com/pk/search?q=${encodeURIComponent(featured.title)}" target="_blank" rel="noopener noreferrer">Find official options <span>↗</span></a></div>
+          <div class="hero-actions"><a class="primary-button" href="${detailUrl(featured)}">Explore title <span>→</span></a><a class="secondary-button" href="https://www.justwatch.com/pk/search?q=${encodeURIComponent(featured.title)}" target="_blank" rel="noopener noreferrer">Find viewing options</a></div>
         </div>
         <div class="hero-index"><span>01</span><span class="index-line"></span><span>${String(catalog.length).padStart(2, '0')}</span><small>CURATED DEMOS</small></div>
         <div class="hero-bottom-label">STORIES THAT STAY WITH YOU</div>
@@ -285,7 +305,7 @@
 
   function renderCatalog(state = getState()) {
     const results = getResults(state);
-    const heading = state.query ? `Results for “${escapeHtml(state.query)}”` : state.currentGenre ? escapeHtml(state.currentGenre) : state.currentCategory !== 'All' ? escapeHtml(categoryLabel(state.currentCategory)) : 'Explore titles';
+    const heading = state.query ? `Results for “${escapeHtml(state.query)}”` : state.currentGenre ? escapeHtml(state.currentGenre) : state.currentCategory !== 'All' ? escapeHtml(categoryLabel(state.currentCategory)) : 'Discover';
     const eyebrow = state.query ? 'SEARCH RESULTS' : (state.currentCategory === 'All' && !state.currentGenre && state.currentLanguage === 'All languages' ? 'HANDPICKED FOR YOU' : 'BROWSE COLLECTION');
     const featured = catalog.find(item => item.featured) || catalog[0];
     const titleGrid = results.length
@@ -316,15 +336,15 @@
           <div class="detail-rating"><span class="star">★</span><strong>${escapeHtml(item.rating || 'N/A')}</strong><span class="rating-caption">editorial score</span></div>
           <p class="detail-synopsis">${escapeHtml(item.synopsis)}</p>
           <div class="genre-list">${(item.genres || []).map(genre => `<a href="${listingUrl({ genre, category: 'All' })}">${escapeHtml(genre)}</a>`).join('')}</div>
-          <a class="primary-button" href="https://www.justwatch.com/pk/search?q=${encodeURIComponent(item.title)}" target="_blank" rel="noopener noreferrer">Find official viewing options <span>↗</span></a>
+          <a class="primary-button" href="https://www.justwatch.com/pk/search?q=${encodeURIComponent(item.title)}" target="_blank" rel="noopener noreferrer">Find official viewing options <span>→</span></a>
           <p class="legal-note">Availability varies by country. ReelShelf does not host video files or provide unauthorized downloads.</p>
         </div>
       </section>
-      <section class="section-block related-block"><div class="section-heading"><div><span class="eyebrow">KEEP EXPLORING</span><h2>You might also like</h2></div><a class="text-link" href="./">View all</a></div><div class="poster-grid">${related.map(cardMarkup).join('')}</div></section>`;
+      <section class="section-block related-block"><div class="section-heading"><div><span class="eyebrow">KEEP EXPLORING</span><h2>You might also like</h2></div><a class="text-link" href="./">View all titles</a></div><div class="poster-grid">${related.map(cardMarkup).join('')}</div></section>`;
   }
 
   function renderNotFound() {
-    return `<section class="empty-state title-not-found"><div class="empty-icon">⌕</div><h3>Title not found</h3><p>This title may have been removed or the link may be incorrect.</p><a class="secondary-button" href="./">Back to discovery</a></section>`;
+    return `<section class="empty-state title-not-found"><div class="empty-icon">⌕</div><h3>Title not found</h3><p>This title may have been removed or the link may be incorrect.</p><a class="secondary-button" href="./">Back to catalog</a></section>`;
   }
 
   function updatePageMetadata(state = getState()) {
@@ -379,4 +399,3 @@
     renderApplication();
   })();
 })();
-

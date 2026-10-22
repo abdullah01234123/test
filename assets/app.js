@@ -199,21 +199,31 @@
     const requests = [
       tmdbFetch('/trending/all/week', { page: 1 }),
       tmdbFetch('/trending/all/week', { page: 2 }),
+      tmdbFetch('/trending/all/week', { page: 3 }),
       tmdbFetch('/movie/popular', { page: 1 }),
       tmdbFetch('/movie/popular', { page: 2 }),
+      tmdbFetch('/movie/popular', { page: 3 }),
+      tmdbFetch('/movie/popular', { page: 4 }),
       tmdbFetch('/tv/popular', { page: 1 }),
-      tmdbFetch('/tv/popular', { page: 2 })
+      tmdbFetch('/tv/popular', { page: 2 }),
+      tmdbFetch('/tv/popular', { page: 3 }),
+      tmdbFetch('/tv/popular', { page: 4 })
     ];
 
-    const [trendingPage1, trendingPage2, popularMovies1, popularMovies2, popularSeries1, popularSeries2] = await Promise.all(requests);
+    const [trending1, trending2, trending3, movie1, movie2, movie3, movie4, series1, series2, series3, series4] = await Promise.all(requests);
 
     const combined = [
-      ...(Array.isArray(trendingPage1 && trendingPage1.results) ? trendingPage1.results : []),
-      ...(Array.isArray(trendingPage2 && trendingPage2.results) ? trendingPage2.results : []),
-      ...(Array.isArray(popularMovies1 && popularMovies1.results) ? popularMovies1.results : []),
-      ...(Array.isArray(popularMovies2 && popularMovies2.results) ? popularMovies2.results : []),
-      ...(Array.isArray(popularSeries1 && popularSeries1.results) ? popularSeries1.results : []),
-      ...(Array.isArray(popularSeries2 && popularSeries2.results) ? popularSeries2.results : [])
+      ...(Array.isArray(trending1 && trending1.results) ? trending1.results : []),
+      ...(Array.isArray(trending2 && trending2.results) ? trending2.results : []),
+      ...(Array.isArray(trending3 && trending3.results) ? trending3.results : []),
+      ...(Array.isArray(movie1 && movie1.results) ? movie1.results : []),
+      ...(Array.isArray(movie2 && movie2.results) ? movie2.results : []),
+      ...(Array.isArray(movie3 && movie3.results) ? movie3.results : []),
+      ...(Array.isArray(movie4 && movie4.results) ? movie4.results : []),
+      ...(Array.isArray(series1 && series1.results) ? series1.results : []),
+      ...(Array.isArray(series2 && series2.results) ? series2.results : []),
+      ...(Array.isArray(series3 && series3.results) ? series3.results : []),
+      ...(Array.isArray(series4 && series4.results) ? series4.results : [])
     ];
 
     const unique = new Map();
@@ -224,7 +234,7 @@
     });
 
     const normalized = Array.from(unique.values())
-      .slice(0, 72)
+      .slice(0, 100)
       .map(item => normalizeTmdbItem(item, item.media_type === 'tv' || Boolean(item.first_air_date) ? 'tv' : 'movie'));
 
     return normalized.filter(item => item && item.title && item.poster);
