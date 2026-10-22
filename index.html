@@ -38,14 +38,68 @@
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
     }
     .social-links a:hover,
     .social-links a:focus-visible {
       transform: translateY(-1px);
-      border-color: rgba(199,243,106,0.8);
-      background: rgba(199,243,106,0.12);
+      border-color: rgba(255,255,255,0.18);
       outline: none;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.2);
+    }
+    .social-links .facebook {
+      background: #1877f2;
+      border-color: rgba(24,119,242,0.7);
+      color: #ffffff;
+    }
+    .social-links .facebook:hover,
+    .social-links .facebook:focus-visible {
+      background: #166fe5;
+    }
+    .social-links .linkedin {
+      background: #0a66c2;
+      border-color: rgba(10,102,194,0.7);
+      color: #ffffff;
+    }
+    .social-links .linkedin:hover,
+    .social-links .linkedin:focus-visible {
+      background: #084c97;
+    }
+    .social-links .instagram {
+      background: linear-gradient(135deg, #feda75 0%, #fa7e1e 18%, #d62976 52%, #962fbf 76%, #4f5bd5 100%);
+      border-color: rgba(255,255,255,0.4);
+      color: #ffffff;
+    }
+    .social-links .instagram:hover,
+    .social-links .instagram:focus-visible {
+      filter: brightness(1.04);
+    }
+    .social-links .x {
+      background: #111111;
+      border-color: rgba(255,255,255,0.16);
+      color: #ffffff;
+    }
+    .social-links .x:hover,
+    .social-links .x:focus-visible {
+      background: #1b1b1b;
+    }
+    .social-links .youtube {
+      background: #ff0000;
+      border-color: rgba(255,0,0,0.6);
+      color: #ffffff;
+    }
+    .social-links .youtube:hover,
+    .social-links .youtube:focus-visible {
+      background: #e60000;
+    }
+    .social-links .tiktok {
+      background: linear-gradient(135deg, #00f2ea 0%, #ff0050 100%);
+      border-color: rgba(255,255,255,0.35);
+      color: #111827;
+    }
+    .social-links .tiktok:hover,
+    .social-links .tiktok:focus-visible {
+      filter: brightness(1.05);
     }
     @media (max-width: 640px) {
       .social-links {
@@ -60,7 +114,7 @@
 </head>
 <body>
 <div class="site-shell">
-  <div class="notice-bar"><span class="notice-dot"></span> Discover stories worth staying up for <span class="notice-separator">/</span> <span class="notice-muted">Live movie and TV data powered by TMDB</span></div>
+  <div class="notice-bar"><span class="notice-dot"></span> Discover stories worth staying up for <span class="notice-separator">/</span> <span class="notice-muted">Live movie and TV data powered by TMDB.</span></div>
   <header class="site-header">
     <a class="brand" href="./" aria-label="ReelShelf homepage"><span class="brand-mark">R</span><span>reel<span class="brand-accent">shelf</span><small>YOUR NEXT STORY STARTS HERE</small></span></a>
     <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button>
@@ -87,12 +141,12 @@
       <a class="brand footer-brand" href="./"><span class="brand-mark">R</span><span>reel<span class="brand-accent">shelf</span><small>YOUR NEXT STORY STARTS HERE</small></span></a>
       <p>A discovery catalogue for curious viewers.</p>
       <div class="social-links" aria-label="Social media links">
-        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
-        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a href="https://x.com" target="_blank" rel="noopener noreferrer">X</a>
-        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">YouTube</a>
-        <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer">TikTok</a>
+        <a class="facebook" href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a class="linkedin" href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a class="instagram" href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a class="x" href="https://x.com" target="_blank" rel="noopener noreferrer">X</a>
+        <a class="youtube" href="https://youtube.com" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a class="tiktok" href="https://tiktok.com" target="_blank" rel="noopener noreferrer">TikTok</a>
       </div>
       <a href="mailto:hello@example.com" class="footer-contact">Contact <span>↗</span></a>
     </div>
