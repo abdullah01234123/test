@@ -284,8 +284,8 @@
     const categoryChips = categories.map(category => `
       <a class="filter-chip ${state.currentCategory === category && !state.currentGenre ? 'selected' : ''}" href="${listingUrl({ category, genre: '' }, state)}">${escapeHtml(categoryLabel(category))}</a>`).join('');
     const genreChips = [
-      `<a class="filter-chip ${!state.currentGenre ? 'selected' : ''}" href="${listingUrl({ genre: '' }, state)}">All genres</a>`,
-      ...genres.map(genre => `<a class="filter-chip ${state.currentGenre === genre ? 'selected' : ''}" href="${listingUrl({ genre, category: 'All' }, state)}">${escapeHtml(genre)}</a>`)
+      `<a class="filter-chip genre-chip ${!state.currentGenre ? 'selected' : ''}" data-genre="All genres" href="${listingUrl({ genre: '' }, state)}">All genres</a>`,
+      ...genres.map(genre => `<a class="filter-chip genre-chip ${state.currentGenre === genre ? 'selected' : ''}" data-genre="${escapeHtml(genre)}" href="${listingUrl({ genre, category: 'All' }, state)}">${escapeHtml(genre)}</a>`)
     ].join('');
     const languageChips = languages.map(language => `
       <a class="filter-chip ${state.currentLanguage === language ? 'selected' : ''}" href="${listingUrl({ language }, state)}">${escapeHtml(language)}</a>`).join('');
@@ -306,7 +306,7 @@
           <div class="hero-kicker"><span class="kicker-dot"></span> FEATURED STORY <span class="kicker-rule"></span> ${escapeHtml(featured.year)}</div>
           <h1>${escapeHtml(featured.title)}</h1>
           <p class="hero-tagline">${escapeHtml(featured.tagline)}</p>
-          <div class="hero-meta"><span class="hero-rating">★ ${escapeHtml(featured.rating || 'N/A')}</span><span>${escapeHtml(featured.kind)}</span><span>${escapeHtml(featured.runtime)}</span></div>
+          <div class="hero-meta"><span class="hero-rating">★ ${escapeHtml(featured.rating || 'N/A')}</span><span>${escapeHtml(featured.kind)}</span><span>${escapeHtml(featured.runtime)}</span><span>${escapeHtml(featured.language)}</span></div>
           <p class="hero-description">${escapeHtml(featured.synopsis)}</p>
           <div class="hero-actions"><a class="primary-button" href="${detailUrl(featured)}">Explore title <span>→</span></a><a class="secondary-button" href="https://www.justwatch.com/pk/search?q=${encodeURIComponent(featured.title)}" target="_blank" rel="noopener noreferrer">Find viewing options</a></div>
         </div>
@@ -331,7 +331,7 @@
 
   function renderCatalog(state = getState()) {
     const results = getResults(state);
-    const heading = state.query ? `Results for “${escapeHtml(state.query)}”` : state.currentGenre ? escapeHtml(state.currentGenre) : state.currentCategory !== 'All' ? escapeHtml(categoryLabel(state.currentCategory)) : 'Discover';
+    const heading = state.query ? `Results for “${escapeHtml(state.query)}”` : state.currentGenre ? escapeHtml(state.currentGenre) : state.currentCategory !== 'All' ? escapeHtml(categoryLabel(state.currentCategory)) : 'Discover stories';
     const eyebrow = state.query ? 'SEARCH RESULTS' : (state.currentCategory === 'All' && !state.currentGenre && state.currentLanguage === 'All languages' ? 'HANDPICKED FOR YOU' : 'BROWSE COLLECTION');
     const featured = catalog.find(item => item.featured) || catalog[0];
     const titleGrid = results.length
@@ -366,11 +366,11 @@
           <p class="legal-note">Availability varies by country. ReelShelf does not host video files or provide unauthorized downloads.</p>
         </div>
       </section>
-      <section class="section-block related-block"><div class="section-heading"><div><span class="eyebrow">KEEP EXPLORING</span><h2>You might also like</h2></div><a class="text-link" href="./">View all titles</a></div><div class="poster-grid">${related.map(cardMarkup).join('')}</div></section>`;
+      <section class="section-block related-block"><div class="section-heading"><div><span class="eyebrow">KEEP EXPLORING</span><h2>You might also like</h2></div><a class="text-link" href="./">View all</a></div><div class="poster-grid">${related.map(cardMarkup).join('')}</div></section>`;
   }
 
   function renderNotFound() {
-    return `<section class="empty-state title-not-found"><div class="empty-icon">⌕</div><h3>Title not found</h3><p>This title may have been removed or the link may be incorrect.</p><a class="secondary-button" href="./">Back to catalog</a></section>`;
+    return `<section class="empty-state title-not-found"><div class="empty-icon">⌕</div><h3>Title not found</h3><p>This title may have been removed or the link may be incorrect.</p><a class="secondary-button" href="./">Back to discover</a></section>`;
   }
 
   function updatePageMetadata(state = getState()) {
